@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueSight - AI Deepfake Detection</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+        <h2>Initializing TrueSight System...</h2>
+        <p>AI-powered deepfake detection platform</p>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>TrueSight</span>
+                </div>
+                <nav class="nav">
+                    <button id="dashboard-btn" class="nav-btn active">
+                        <i class="fas fa-chart-bar"></i> Dashboard
+                    </button>
+                    <button id="detection-btn" class="nav-btn">
+                        <i class="fas fa-video"></i> Detection
+                    </button>
+                    <button id="forensics-btn" class="nav-btn">
+                        <i class="fas fa-search"></i> Forensics
+                    </button>
+                    <button id="settings-btn" class="nav-btn">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                </nav>
+                <div class="user-info">
+                    <span id="username">Demo User</span>
+                    <button id="logout-btn" class="btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Dashboard View -->
+                <section id="dashboard-view" class="view active">
+                    <div class="page-header">
+                        <h1>System Dashboard</h1>
+                        <p>Real-time monitoring and analytics</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-file-video"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="total-detections">0</h3>
+                                <p>Total Detections</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="deepfakes-found">0</h3>
+                                <p>Deepfakes Detected</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="accuracy-rate">95%</h3>
+                                <p>Detection Accuracy</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="avg-processing">48ms</h3>
+                                <p>Avg Processing Time</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-section">
+                        <div class="chart-container">
+                            <h3>Recent Activity</h3>
+                            <div id="activity-chart" class="chart-placeholder">
+                                <div class="chart-grid">
+                                    <div class="chart-bar" style="height: 70%"></div>
+                                    <div class="chart-bar" style="height: 45%"></div>
+                                    <div class="chart-bar" style="height: 85%"></div>
+                                    <div class="chart-bar" style="height: 30%"></div>
+                                    <div class="chart-bar" style="height: 90%"></div>
+                                    <div class="chart-bar" style="height: 60%"></div>
+                                    <div class="chart-bar" style="height: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Detection View -->
+                <section id="detection-view" class="view">
+                    <div class="page-header">
+                        <h1>Deepfake Detection</h1>
+                        <p>Upload media for AI-powered analysis</p>
+                    </div>
+                    
+                    <div class="detection-form">
+                        <div class="upload-area" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <h3>Drop files here or click to upload</h3>
+                            <p>Supports MP4, AVI, MOV videos and MP3, WAV audio files</p>
+                            <input type="file" id="file-input" accept="video/*,audio/*" multiple>
+                        </div>
+                        
+                        <div class="detection-options">
+                            <div class="option-group">
+                                <label>Detection Types:</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="video-check" checked>
+                                        <span class="checkmark"></span>
+                                        Video Analysis
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="audio-check" checked>
+                                        <span class="checkmark"></span>
+                                        Audio Analysis
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="forensics-check">
+                                        <span class="checkmark"></span>
+                                        Forensic Analysis
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label>Confidence Threshold:</label>
+                                <select id="confidence-select">
+                                    <option value="0.8">High (80%)</option>
+                                    <option value="0.9" selected>Very High (90%)</option>
+                                    <option value="0.95">Ultra High (95%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button id="analyze-btn" class="btn-primary btn-large">
+                            <i class="fas fa-search"></i> Analyze Media
+                        </button>
+                    </div>
+                    
+                    <!-- Results Section -->
+                    <div id="results-section" class="results-section hidden">
+                        <h2>Analysis Results</h2>
+                        <div id="results-container"></div>
+                    </div>
+                </section>
+
+                <!-- Forensics View -->
+                <section id="forensics-view" class="view">
+                    <div class="page-header">
+                        <h1>Digital Forensics</h1>
+                        <p>Advanced source attribution and evidence analysis</p>
+                    </div>
+                    
+                    <div class="forensics-tools">
+                        <div class="tool-card">
+                            <i class="fas fa-camera"></i>
+                            <h3>Device Attribution</h3>
+                            <p>Identify source camera/device</p>
+                            <button class="btn-secondary">Start Analysis</button>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <i class="fas fa-fingerprint"></i>
+                            <h3>PRNU Analysis</h3>
+                            <p>Photo Response Non-Uniformity</p>
+                            <button class="btn-secondary">Run PRNU</button>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <i class="fas fa-compress"></i>
+                            <h3>Compression Analysis</h3>
+                            <p>Detect compression artifacts</p>
+                            <button class="btn-secondary">Analyze Compression</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings View -->
+                <section id="settings-view" class="view">
+                    <div class="page-header">
+                        <h1>System Settings</h1>
+                        <p>Configure TrueSight preferences</p>
+                    </div>
+                    
+                    <div class="settings-panel">
+                        <div class="setting-group">
+                            <h3>API Configuration</h3>
+                            <div class="setting-item">
+                                <label>API Endpoint:</label>
+                                <input type="text" id="api-endpoint" value="http://localhost:8000" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <h3>User Preferences</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="notifications" checked>
+                                    Enable notifications
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="auto-refresh" checked>
+                                    Auto-refresh dashboard
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
